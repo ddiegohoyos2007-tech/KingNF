@@ -11,7 +11,6 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            /* Fondo de mapa medieval continuo en toda la página */
             background-color: #120f0c;
             background-image: 
                 radial-gradient(circle at 50% 30%, rgba(50, 38, 25, 0.85) 0%, rgba(12, 10, 8, 0.98) 100%),
@@ -32,7 +31,6 @@
             box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.95), 0 10px 30px rgba(0, 0, 0, 0.7);
         }
 
-        /* Botones garantizados como 100% interactivos */
         .map-btn {
             background: linear-gradient(to bottom, #352a1a, #1a140c);
             border: 1.5px solid rgba(197, 160, 89, 0.7);
@@ -47,9 +45,7 @@
             box-shadow: 0 0 15px rgba(246, 211, 101, 0.4);
             transform: translateY(-1px);
         }
-        .map-btn:active {
-            transform: translateY(1px);
-        }
+        .map-btn:active { transform: translateY(1px); }
 
         @keyframes sea-dragon-float {
             0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); filter: drop-shadow(0 0 10px rgba(185, 28, 28, 0.4)); }
@@ -62,11 +58,14 @@
             50% { transform: scale(1.03); }
         }
         .animate-prince { animation: prince-pulse 4s ease-in-out infinite; }
+
+        /* Escena pixelada del santuario */
+        #pixel-scene { image-rendering: pixelated; image-rendering: crisp-edges; display: block; width: 100%; height: auto; }
     </style>
 </head>
 <body class="selection:bg-amber-600 selection:text-white">
 
-    <!-- ENCABEZADO CON BOTONES 100% INTERACTIVOS -->
+    <!-- ENCABEZADO -->
     <header class="border-b-2 border-amber-900/40 bg-black/90 backdrop-blur sticky top-0 z-50 py-4 px-6 shadow-md">
         <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-3">
@@ -76,7 +75,6 @@
                     <p class="font-manuscript text-[11px] text-amber-600/80 tracking-wider">MAPA DE RUTA Y DOMINIO PROPIO • 90 DÍAS</p>
                 </div>
             </div>
-            <!-- Acciones del menú (botones interactivos garantizados) -->
             <div class="flex items-center gap-3 relative z-50">
                 <button type="button" onclick="openPanicModal()" class="map-btn text-amber-300 px-4 py-2 rounded text-xs font-cinzel font-semibold tracking-wider flex items-center gap-2">
                     ⚡ Santuario de Runa (Pánico)
@@ -91,16 +89,13 @@
     <!-- CUERPO PRINCIPAL -->
     <main class="max-w-6xl w-full mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        <!-- COLUMNA PRINCIPAL (CABALLERO QUE EVOLUCIONA + CONTADOR DETALLADO + DRAGÓN) -->
         <div class="lg:col-span-2 space-y-6">
             
-            <!-- SECCIÓN 1: CABALLERO QUE EVOLUCIONA POR DÍAS Y DRAGÓN MARINO -->
             <div class="map-parchment rounded-xl p-6 relative overflow-hidden">
                 <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#d4af37_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none"></div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 relative z-10">
                     
-                    <!-- Dragón Serpiente de Fondo -->
                     <div class="bg-black/60 p-4 rounded-xl border border-red-950/50 flex items-center gap-4">
                         <div class="animate-sea-dragon text-4xl text-red-600">🐉</div>
                         <div>
@@ -110,7 +105,6 @@
                         </div>
                     </div>
 
-                    <!-- Caballero que evoluciona por días -->
                     <div class="bg-zinc-900/90 p-4 rounded-xl border border-amber-600/50 flex items-center justify-between animate-prince shadow-md">
                         <div>
                             <span id="prince-rank" class="font-manuscript text-[9px] uppercase tracking-widest bg-amber-950 text-amber-400 border border-amber-700/50 px-2 py-0.5 rounded font-bold">Fase I</span>
@@ -124,7 +118,7 @@
 
                 </div>
 
-                <!-- SECCIÓN 2: CONTADOR DETALLADO (#Días, #Horas, #Min, #Seg) -->
+                <!-- CONTADOR DETALLADO -->
                 <div class="bg-black/50 p-5 rounded-xl border border-amber-900/40 mb-6 relative z-10">
                     <div class="flex justify-between items-center mb-4">
                         <div>
@@ -138,7 +132,6 @@
                         </div>
                     </div>
 
-                    <!-- Cuadrícula de Tiempo Detallada (#Días, #Horas, #Min, #Seg) -->
                     <div class="grid grid-cols-4 gap-3 text-center">
                         <div class="bg-black/70 p-3 rounded-lg border border-amber-900/30">
                             <span id="time-days" class="font-cinzel text-2xl font-bold text-amber-100 block">00</span>
@@ -158,7 +151,6 @@
                         </div>
                     </div>
 
-                    <!-- Barra de Progreso -->
                     <div class="mt-5 space-y-1.5">
                         <div class="flex justify-between font-manuscript text-xs text-amber-600/90">
                             <span>Progreso Cartográfico hacia el Trono</span>
@@ -172,19 +164,19 @@
 
             </div>
 
-            <!-- FASES DEL MAPA / LOGROS -->
+            <!-- HITOS -->
             <div class="map-parchment rounded-xl p-6">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="font-cinzel text-sm font-bold text-amber-200 uppercase tracking-wider flex items-center gap-2">
                         <span>🗺️</span> Hitos Registrados en el Mapa
                     </h3>
-                    <span class="font-manuscript text-xs text-amber-600" id="unlocked-count">0/7 Desbloqueados</span>
+                    <span class="font-manuscript text-xs text-amber-600" id="unlocked-count">0/8 Desbloqueados</span>
                 </div>
                 <div id="achievements-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
             </div>
         </div>
 
-        <!-- COLUMNA DERECHA (SABIDURÍA Y BITÁCORA) -->
+        <!-- COLUMNA DERECHA -->
         <div class="space-y-6">
             <div class="map-parchment rounded-xl p-6 relative">
                 <div class="absolute top-4 right-4 text-amber-600/20 text-3xl font-cinzel">“</div>
@@ -212,14 +204,14 @@
                     </div>
                     <div class="flex justify-between py-2">
                         <span class="text-zinc-400">Hitos Alcanzados:</span>
-                        <span id="milestones-completed" class="text-amber-400 font-medium">0 / 7</span>
+                        <span id="milestones-completed" class="text-amber-400 font-medium">0 / 8</span>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- MODAL DE PÁNICO (INSPIRADO EN MOWGLI Y LA SERPIENTE KAA) -->
+    <!-- MODAL DE PÁNICO -->
     <div id="panic-modal" class="fixed inset-0 bg-black/95 backdrop-blur-md z-[100] hidden flex items-center justify-center p-4">
         <div class="map-parchment rounded-2xl max-w-lg w-full p-8 relative shadow-2xl text-center space-y-5 border border-amber-600/40">
             <button type="button" onclick="closePanicModal()" class="absolute top-4 right-4 text-zinc-300 hover:text-white text-sm font-bold w-8 h-8 rounded bg-black/60 flex items-center justify-center cursor-pointer border border-amber-800/40 z-50">✕</button>
@@ -229,13 +221,12 @@
                 <h3 class="font-cinzel text-xl font-bold text-amber-100 mt-3">Rompe el Hipnotismo de la Distracción</h3>
             </div>
 
-            <!-- IMAGEN Y ESCENA INSPIRADA EN MOWGLI Y LA SERPIENTE -->
+            <!-- ESCENA PIXELADA ANIMADA (dibujada con canvas, sin imágenes externas) -->
             <div class="bg-black/80 p-4 rounded-xl border border-amber-900/50 flex flex-col items-center justify-center relative overflow-hidden">
                 <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#ef4444_1px,transparent_1px)] bg-[size:12px_12px]"></div>
                 
-                <!-- Contenedor con la imagen oficial de Mowgli y Kaa incrustada vía web -->
-                <div class="relative z-10 w-full max-w-[280px] h-44 rounded-lg overflow-hidden border-2 border-amber-600/60 shadow-lg mb-2">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/5a/Mowgli_and_Kaa.jpg/300px-Mowgli_and_Kaa.jpg" alt="Mowgli y Kaa" class="w-full h-full object-cover">
+                <div class="relative z-10 w-full max-w-[288px] rounded-lg overflow-hidden border-2 border-amber-600/60 shadow-lg mb-2">
+                    <canvas id="pixel-scene" width="96" height="64" role="img" aria-label="Escena pixelada: una serpiente hipnótica enrollada alrededor de un niño sobre una rama"></canvas>
                 </div>
                 
                 <p class="font-manuscript text-[11px] text-amber-200/90 mt-1 italic px-2">
@@ -258,17 +249,21 @@
         </div>
     </div>
 
-    <!-- SCRIPT DE LÓGICA Y PERSISTENCIA ROBUSTA -->
     <script>
+        // Etapas del caballero (días 0 = inicio) con hitos en 1, 2, 5, 1 semana, 2 semanas, 1 mes, 2 meses y 3 meses
         const princeStages = [
-            { days: 0, title: "Viajero Errante", rank: "Fase I", desc: "Zarpa tu travesía en aguas desconocidas.", icon: "🧥", avatar: "🧥" },
-            { days: 3, title: "Escudero de Honor", rank: "Fase II", desc: "Has dominado las primeras corrientes del mapa.", icon: "🛡️", avatar: "🛡️" },
-            { days: 7, title: "Guerrero de la Guardia", rank: "Fase III", desc: "Una semana de navegación firme ante la serpiente.", icon: "⚔️", avatar: "⚔️" },
-            { days: 14, title: "Caballero del Alba", rank: "Fase IV", desc: "Dos semanas imbatibles surcando los mares del este.", icon: "⭐", avatar: "🛡️✨" },
-            { days: 30, title: "Comandante de la Flota", rank: "Fase V", desc: "Un mes entero dominando las mareas con estandarte.", icon: "🚩", avatar: "🚩" },
-            { days: 60, title: "Gran Mariscal del Mar", rank: "Fase VI", desc: "Dos meses de conquista y sabiduría cartográfica.", icon: "🎖️", avatar: "🎖️" },
-            { days: 90, title: "Emperador del Trono", rank: "Fase Final", desc: "Has completado la Carta Marina. Dueño absoluto.", icon: "👑", avatar: "👑" }
+            { days: 0,  label: "Inicio",    title: "Viajero Errante",        rank: "Fase I",     desc: "Zarpa tu travesía en aguas desconocidas.",            icon: "🧥", avatar: "🧥" },
+            { days: 1,  label: "1 día",     title: "Grumete Decidido",       rank: "Fase II",    desc: "El primer día ya es tuyo. Lo más difícil fue empezar.", icon: "🧭", avatar: "🧭" },
+            { days: 2,  label: "2 días",    title: "Aprendiz de Navegante",  rank: "Fase III",   desc: "Dos mareas superadas. Ya lees el viento.",            icon: "⚓", avatar: "⚓" },
+            { days: 5,  label: "5 días",    title: "Escudero de Honor",      rank: "Fase IV",    desc: "Cinco días firmes. La corriente empieza a ceder.",    icon: "🛡️", avatar: "🛡️" },
+            { days: 7,  label: "1 semana",  title: "Guerrero de la Guardia", rank: "Fase V",     desc: "Una semana de navegación firme ante la serpiente.",   icon: "⚔️", avatar: "⚔️" },
+            { days: 14, label: "2 semanas", title: "Caballero del Alba",     rank: "Fase VI",    desc: "Dos semanas imbatibles surcando los mares del este.", icon: "⭐", avatar: "🛡️✨" },
+            { days: 30, label: "1 mes",     title: "Comandante de la Flota", rank: "Fase VII",   desc: "Un mes entero dominando las mareas con estandarte.",  icon: "🚩", avatar: "🚩" },
+            { days: 60, label: "2 meses",   title: "Gran Mariscal del Mar",  rank: "Fase VIII",  desc: "Dos meses de conquista y sabiduría cartográfica.",    icon: "🎖️", avatar: "🎖️" },
+            { days: 90, label: "3 meses",   title: "Emperador del Trono",    rank: "Fase Final", desc: "Has completado la Carta Marina. Dueño absoluto.",     icon: "👑", avatar: "👑" }
         ];
+        // Los hitos son todas las etapas salvo el punto de partida
+        const hitos = princeStages.filter(s => s.days > 0);
 
         const quotes = [
             { text: "El hombre que domina su mente es más poderoso que aquel que conquista reinos enteros.", author: "Sabiduría del Mapa" },
@@ -276,7 +271,7 @@
             { text: "Cada día en firme es una ruta trazada hacia la victoria final.", author: "Crónicas del Viajero" }
         ];
 
-        // Guardar y recuperar la fecha de inicio permanentemente en LocalStorage
+        // Fecha de inicio persistente en LocalStorage
         let startDate = localStorage.getItem('carta_start_date');
         if (!startDate) {
             startDate = new Date().getTime();
@@ -297,7 +292,6 @@
             const mins = Math.floor((totalSecs % 3600) / 60);
             const secs = totalSecs % 60;
 
-            // Actualizar elementos numéricos en tiempo real
             document.getElementById('days-count').innerText = days;
             document.getElementById('time-days').innerText = String(days).padStart(2, '0');
             document.getElementById('time-hours').innerText = String(hours).padStart(2, '0');
@@ -308,7 +302,6 @@
             document.getElementById('progress-percent').innerText = percent + '%';
             document.getElementById('progress-bar').style.width = percent + '%';
 
-            // Determinar fase del caballero evolutivo
             let currentStage = princeStages[0];
             princeStages.forEach(stage => { if (days >= stage.days) currentStage = stage; });
 
@@ -317,8 +310,8 @@
             document.getElementById('prince-desc').innerText = currentStage.desc;
             document.getElementById('prince-avatar').innerText = currentStage.avatar;
             
-            let milestonesCount = princeStages.filter(s => days >= s.days).length;
-            document.getElementById('milestones-completed').innerText = milestonesCount + ' / ' + princeStages.length;
+            let milestonesCount = hitos.filter(s => days >= s.days).length;
+            document.getElementById('milestones-completed').innerText = milestonesCount + ' / ' + hitos.length;
 
             renderAchievements(days);
         }
@@ -329,7 +322,7 @@
             grid.innerHTML = '';
             let unlockedCount = 0;
 
-            princeStages.forEach(stage => {
+            hitos.forEach(stage => {
                 const isUnlocked = currentDays >= stage.days;
                 if (isUnlocked) unlockedCount++;
 
@@ -338,14 +331,14 @@
                 card.innerHTML = `
                     <div class="text-2xl p-2 rounded ${isUnlocked ? 'bg-amber-950/50 border border-amber-700/40' : 'bg-zinc-900 border border-zinc-800'}">${stage.icon}</div>
                     <div>
-                        <span class="font-manuscript text-[9px] ${isUnlocked ? 'text-amber-400' : 'text-zinc-600'} uppercase tracking-wider block">Día ${stage.days}</span>
+                        <span class="font-manuscript text-[9px] ${isUnlocked ? 'text-amber-400' : 'text-zinc-600'} uppercase tracking-wider block">${stage.label}</span>
                         <h4 class="font-cinzel text-xs font-bold ${isUnlocked ? 'text-amber-100' : 'text-zinc-500'}">${stage.title}</h4>
                         <span class="font-manuscript text-[9px] ${isUnlocked ? 'text-emerald-400' : 'text-zinc-600'} font-medium">${isUnlocked ? '✓ Sello en el Mapa' : 'Bloqueado'}</span>
                     </div>
                 `;
                 grid.appendChild(card);
             });
-            document.getElementById('unlocked-count').innerText = unlockedCount + '/' + princeStages.length;
+            document.getElementById('unlocked-count').innerText = unlockedCount + '/' + hitos.length + ' Desbloqueados';
         }
 
         let currentQuoteIndex = 0;
@@ -355,13 +348,106 @@
             document.getElementById('daily-author').innerText = `— ${quotes[currentQuoteIndex].author}`;
         }
 
-        // Controladores interactivos de apertura y cierre de modal
+        /* ===== ESCENA PIXELADA: serpiente hipnótica y niño en una rama (96x64 px, 10 fps) ===== */
+        const PixelScene = (function () {
+            const cv = document.getElementById('pixel-scene'), c = cv.getContext('2d');
+            const px = (x, y, k) => { c.fillStyle = k; c.fillRect(Math.round(x), Math.round(y), 1, 1); };
+            const rc = (x, y, w, h, k) => { c.fillStyle = k; c.fillRect(Math.round(x), Math.round(y), w, h); };
+            const disc = (x, y, r, k) => { for (let j = -r; j <= r; j++) for (let i = -r; i <= r; i++) if (i * i + j * j <= r * r + 1) px(x + i, y + j, k); };
+            const skin = '#d99a62', skinD = '#bd7d49', hair = '#241410', gold = '#d6a23c', goldD = '#b98a2b', mark = '#5c3317', belly = '#f0d27a';
+            const body = k => k % 6 === 0 ? mark : (k % 2 ? gold : goldD);
+            const ring = [[0,-1],[1,-1],[1,0],[1,1],[0,1],[-1,1],[-1,0],[-1,-1]];
+            const bez = (a, b, d, t) => [(1-t)*(1-t)*a[0] + 2*(1-t)*t*b[0] + t*t*d[0], (1-t)*(1-t)*a[1] + 2*(1-t)*t*b[1] + t*t*d[1]];
+            const eye = (x, y, o, k) => { rc(x - 1, y - 1, 3, 3, k); px(x + o[0], y + o[1], '#111'); };
+            const still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+            let f = 0, timer = null;
+
+            function coil(R, cy, front) {
+                for (let u = 0; u <= 1.001; u += 0.05) {
+                    const s = Math.sin(u * Math.PI) * 2;
+                    disc(52 - R + 2 * R * u, front ? cy + s : cy + 2 - s, 1, body(Math.round(u * 20) + (front ? 0 : 3)));
+                }
+            }
+
+            function draw() {
+                const t = f * 0.12, o = ring[(f >> 1) % 8];
+                const R = 7.5 - 1.2 * Math.sin(f / 80 * Math.PI * 2); // ciclo de 8 s: aprieta al inhalar, afloja al exhalar
+                const hx = 22 + 2 * Math.sin(t), hy = 22 + 2 * Math.cos(t * 1.3);
+
+                // Fondo azul con bandas tramadas
+                const bands = ['#2f7bb8', '#2a70ab', '#25659d', '#205a8f', '#1b5081'];
+                for (let i = 0; i < 5; i++) rc(0, i * 13, 96, 13, bands[i]);
+                for (let i = 1; i < 5; i++) for (let x = i % 2; x < 96; x += 2) px(x, i * 13, bands[i - 1]);
+                // Hojas
+                [[4,4],[11,8],[18,3],[30,6],[66,3],[72,9],[93,5]].forEach(p => {
+                    const dx = Math.round(Math.sin(t + p[0]));
+                    rc(p[0] + dx, p[1], 5, 3, '#2f8f4e'); rc(p[0] + dx + 1, p[1], 3, 1, '#4fb36d');
+                });
+                // Tronco y rama
+                rc(76, 0, 14, 64, '#4a2f18'); rc(76, 0, 2, 64, '#6b4524');
+                for (let y = 0; y < 64; y += 5) rc(79 + (y * 7 % 8), y, 1, 3, '#3a2411');
+                rc(6, 44, 70, 5, '#5a3a1e'); rc(6, 44, 70, 1, '#7a5230'); rc(6, 48, 70, 1, '#3a2411');
+
+                // Cola de la serpiente
+                for (let k = 0; k <= 20; k++) {
+                    const p = bez([52 + R, 41], [64, 52], [74 + Math.sin(t) * 2, 49], k / 20);
+                    disc(p[0], p[1], k < 10 ? 2 : (k < 16 ? 1 : 0), body(k));
+                }
+                // Espiras traseras
+                [33, 37, 41].forEach((cy, i) => coil(R, cy + Math.round(Math.sin(t + i) * 0.6), false));
+
+                // Niño: piernas, torso, taparrabos, brazos, cabeza
+                rc(47, 45, 4, 8, skin); rc(53, 45, 4, 8, skin); rc(46, 52, 5, 2, skinD); rc(53, 52, 5, 2, skinD);
+                rc(46, 30, 12, 14, skin); rc(46, 30, 2, 14, skinD); rc(46, 41, 12, 4, '#a8322d');
+                rc(44, 31, 2, 10, skin); rc(58, 31, 2, 10, skin);
+                for (let j = -6; j <= 6; j++) for (let i = -6; i <= 6; i++) if (i * i + j * j <= 37) px(52 + i, 24 + j, j < -2 ? hair : skin);
+                px(45, 25, skin); px(59, 25, skin); rc(46, 22, 1, 4, hair); rc(58, 22, 1, 4, hair);
+                eye(49, 24, o, '#fff'); eye(55, 24, o, '#fff'); rc(51, 28, 2, 1, '#7a3b2a');
+
+                // Espiras delanteras
+                [33, 37, 41].forEach((cy, i) => coil(R, cy + Math.round(Math.sin(t + i) * 0.6), true));
+
+                // Cuello y cabeza de la serpiente
+                for (let k = 0; k <= 30; k++) { const p = bez([45, 33], [24, 40], [hx - 5, hy + 3], k / 30); disc(p[0], p[1], 2, body(k)); }
+                for (let j = -4; j <= 4; j++) for (let i = -6; i <= 6; i++) if ((i / 6) ** 2 + (j / 4) ** 2 <= 1) px(hx + i, hy + j, j > 1 ? belly : gold);
+                eye(hx + 1, hy - 2, o, '#fff3a0'); eye(hx + 5, hy - 2, o, '#fff3a0');
+                if ((f >> 2) % 2) { rc(hx + 7, hy + 1, 4, 1, '#d12a2a'); px(hx + 11, hy, '#d12a2a'); px(hx + 11, hy + 2, '#d12a2a'); }
+
+                // Anillos de hipnosis que salen de los ojos
+                [0, 8].forEach(q => {
+                    const rr = ((f + q) % 16) + 5, n = Math.round(rr * 2.2);
+                    for (let a = 0; a < n; a += 2) {
+                        const ang = a / n * Math.PI * 2;
+                        px(hx + 3 + Math.cos(ang) * rr, hy - 2 + Math.sin(ang) * rr * 0.8, 'rgba(200,235,255,' + (0.75 - rr / 30).toFixed(2) + ')');
+                    }
+                });
+                f++;
+            }
+
+            return {
+                start() { if (timer) return; f = 0; draw(); if (!still) timer = setInterval(draw, 100); },
+                stop() { clearInterval(timer); timer = null; }
+            };
+        })();
+
+        /* ===== Círculo de respiración sincronizado (4 s inhalar / 4 s exhalar) ===== */
+        const breathText = document.getElementById('breath-text');
+        let breathTimer = null, inhale = true;
+        function setBreathText() { breathText.innerText = inhale ? "Inhala..." : "Exhala..."; }
+        function startBreath() {
+            clearInterval(breathTimer);
+            inhale = true; setBreathText();
+            breathTimer = setInterval(() => { inhale = !inhale; setBreathText(); }, 4000);
+        }
+
         function openPanicModal() {
             const modal = document.getElementById('panic-modal');
             if (modal) {
                 modal.classList.remove('hidden');
                 modal.classList.add('flex');
             }
+            startBreath();
+            PixelScene.start();
         }
         function closePanicModal() {
             const modal = document.getElementById('panic-modal');
@@ -369,29 +455,22 @@
                 modal.classList.remove('flex');
                 modal.classList.add('hidden');
             }
+            clearInterval(breathTimer);
+            PixelScene.stop();
         }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanicModal(); });
 
         function resetProgress() {
             if (confirm("¿Deseas reiniciar la ruta en la Carta Marina?")) {
                 startDate = new Date().getTime();
                 localStorage.setItem('carta_start_date', startDate);
+                document.getElementById('start-date-text').innerText = new Date(startDate).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
                 updateCartaApp();
             }
         }
 
-        // Ejecutar bucle en tiempo real
         setInterval(updateCartaApp, 1000);
         updateCartaApp();
-
-        // Animación de texto del círculo de respiración
-        const breathText = document.getElementById('breath-text');
-        let inhale = true;
-        setInterval(() => {
-            if (breathText) {
-                breathText.innerText = inhale ? "Exhala..." : "Inhala...";
-                inhale = !inhale;
-            }
-        }, 4000);
     </script>
 </body>
 </html>
